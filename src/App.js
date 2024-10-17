@@ -34,14 +34,16 @@ function App() {
       <div className="container">
         <Alert alert={alert} />
         <Routes>
-          <Route exact path="/TextAPIs---Using-React" element={<TextBar
+          <Route
+            exact
+            path="/TextAPIs---Using-React"
+            element={
+              <TextBar
                 showAlert={showAlert}
                 title="Enter your text to analyze...."
-              />} />
-          <Route exact path="/Home" element={<TextBar
-                showAlert={showAlert}
-                title="Enter your text to analyze...."
-              />} />
+              />
+            }
+          />
           <Route exact path="/about" element={<AboutUs />} />
         </Routes>
       </div>

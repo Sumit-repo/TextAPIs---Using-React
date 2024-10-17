@@ -6,12 +6,18 @@ export default function TextBar(props) {
 
   const onClickUpper = () => {
     setText(text.toUpperCase());
-    props.showAlert("Converted to uppercase", "success");
+    if (text.trim().length > 0)
+      props.showAlert("Converted to uppercase", "success");
+    else
+      props.showAlert("Please enter your text before proceeding!", "warning");
   };
 
   const onClickLower = () => {
     setText(text.toLowerCase());
-    props.showAlert("Converted to lowercase", "success");
+    if (text.trim().length > 0)
+      props.showAlert("Converted to lowercase", "success");
+    else
+      props.showAlert("Please enter your text before proceeding!", "warning");
   };
 
   const onChangeFunction = (event) => {
@@ -20,7 +26,9 @@ export default function TextBar(props) {
 
   const onClickClear = (event) => {
     setText(dummyText);
-    props.showAlert("Text area erazed", "success");
+    if (text.trim().length > 0) props.showAlert("Text area erazed", "success");
+    else
+      props.showAlert("Please enter your text before proceeding!", "warning");
   };
 
   const onClickDomainExtract = (event) => {
@@ -38,8 +46,16 @@ export default function TextBar(props) {
   };
 
   const onClickSpeak = () => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+    if (text.trim().length > 0)
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+    else
+      props.showAlert("Please enter your text before proceeding!", "warning");
   };
+
+  const wordCount = (text) =>
+    text.trim().length > 0 ? text.trim().split(/\s+/).length : 0;
+  const charCount = (text) => text.replace(/\s/g, "").length;
+  const minutesToRead = (text) => 0.008 * wordCount(text);
 
   return (
     <>
@@ -73,9 +89,9 @@ export default function TextBar(props) {
       <div className="container my-3">
         <h3>Your text summary</h3>
         <p>
-          Word Count: {text.trim().split(" ").length} <br />
-          Characters Count: {text.trim().length} <br />
-          Minutes to read: {0.008 * text.trim().split(" ").length}
+          Word Count: {wordCount(text)} <br />
+          Characters Count: {charCount(text)} <br />
+          Minutes to read: {minutesToRead(text)}
         </p>
       </div>
     </>
